@@ -19,6 +19,7 @@ UPPAAL
 ------
 All the scripts assume that UPPAAL ([http://www.uppaal.org]()) is installed
 in your computer. The full path of `verifyta` of UPPAAL must be included in the config.json file.
+
 Run the Experiments for Boat Crossing
 -------------------------------------
 	$ cd boat
