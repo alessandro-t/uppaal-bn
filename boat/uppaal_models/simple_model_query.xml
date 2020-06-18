@@ -1,0 +1,1 @@
+simulate seq_length [t<=200] {MonitorW.Car, MonitorB.Car, MonitorC.Car, MonitorEND.Car, MonitorW.Ship, MonitorB.Ship, MonitorC.Ship, MonitorEND.Ship}

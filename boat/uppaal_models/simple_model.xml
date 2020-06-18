@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+bool Bus=0, Bcl=1;
+broadcast chan shipW, shipB, carC,  carEND;
+broadcast chan carW,  carB,  shipC, shipEND;
+clock t;</declaration>
+	<template>
+		<name x="5" y="5">Car</name>
+		<declaration>// Place local declarations here.
+clock x;</declaration>
+		<location id="id0" x="-612" y="-68">
+			<name x="-620" y="-102">Init</name>
+			<label kind="invariant" x="-629" y="-51">x&lt;=10</label>
+		</location>
+		<location id="id1" x="-476" y="-68">
+			<name x="-493" y="-102">W</name>
+			<label kind="exponentialrate" x="-484" y="-51">3</label>
+		</location>
+		<location id="id2" x="-340" y="-68">
+			<name x="-350" y="-102">B</name>
+			<label kind="invariant" x="-365" y="-51">x&lt;=10</label>
+		</location>
+		<location id="id3" x="-195" y="-68">
+			<name x="-205" y="-102">C</name>
+			<label kind="invariant" x="-212" y="-51">x&lt;=15</label>
+		</location>
+		<location id="id4" x="-68" y="-68">
+			<name x="-78" y="-102">END</name>
+		</location>
+		<init ref="id0"/>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id4"/>
+			<label kind="guard" x="-153" y="-68">x&gt;=10</label>
+			<label kind="synchronisation" x="-153" y="-93">carEND!</label>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id3"/>
+			<label kind="guard" x="-323" y="-68">x&gt;=5</label>
+			<label kind="synchronisation" x="-289" y="-93">carC!</label>
+			<label kind="assignment" x="-263" y="-68">Bus=0,
+x=0</label>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id2"/>
+			<label kind="guard" x="-459" y="-68">Bcl</label>
+			<label kind="synchronisation" x="-433" y="-93">carB!</label>
+			<label kind="assignment" x="-408" y="-68">Bus=1,
+x=0</label>
+		</transition>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="guard" x="-595" y="-68">x&gt;=5</label>
+			<label kind="synchronisation" x="-569" y="-93">carW!</label>
+			<label kind="assignment" x="-535" y="-68">x=0</label>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">Ship</name>
+		<declaration>// Place local declarations here.
+clock y;</declaration>
+		<location id="id5" x="-612" y="-68">
+			<name x="-622" y="-102">Init</name>
+			<label kind="invariant" x="-629" y="-51">y&lt;=18</label>
+		</location>
+		<location id="id6" x="-476" y="-68">
+			<name x="-486" y="-102">W</name>
+			<label kind="exponentialrate" x="-484" y="-51">7</label>
+		</location>
+		<location id="id7" x="-340" y="-68">
+			<name x="-350" y="-102">B</name>
+			<label kind="invariant" x="-365" y="-51">y&lt;=18</label>
+		</location>
+		<location id="id8" x="-195" y="-68">
+			<name x="-205" y="-102">C</name>
+			<label kind="invariant" x="-212" y="-51">y&lt;=10</label>
+		</location>
+		<location id="id9" x="-68" y="-68">
+			<name x="-78" y="-102">END</name>
+		</location>
+		<init ref="id5"/>
+		<transition>
+			<source ref="id8"/>
+			<target ref="id9"/>
+			<label kind="guard" x="-178" y="-68">y&gt;=5</label>
+			<label kind="synchronisation" x="-153" y="-93">shipEND!</label>
+		</transition>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id8"/>
+			<label kind="guard" x="-323" y="-68">y&gt;=3</label>
+			<label kind="synchronisation" x="-289" y="-93">shipC!</label>
+			<label kind="assignment" x="-255" y="-68">Bcl=1,
+y=0</label>
+		</transition>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id7"/>
+			<label kind="guard" x="-459" y="-68">! Bus</label>
+			<label kind="synchronisation" x="-433" y="-93">shipB!</label>
+			<label kind="assignment" x="-399" y="-68">Bcl=0,
+y=0</label>
+		</transition>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id6"/>
+			<label kind="guard" x="-595" y="-68">y&gt;=2</label>
+			<label kind="synchronisation" x="-569" y="-93">shipW!</label>
+			<label kind="assignment" x="-518" y="-68">y=0</label>
+		</transition>
+	</template>
+	<template>
+		<name>MonitorW</name>
+		<declaration>double timeCar;
+double timeShip;</declaration>
+		<location id="id10" x="-604" y="-366">
+			<name x="-578" y="-374">Ship</name>
+		</location>
+		<location id="id11" x="-689" y="-366">
+			<name x="-731" y="-374">Car</name>
+		</location>
+		<location id="id12" x="-646" y="-425">
+		</location>
+		<init ref="id12"/>
+		<transition>
+			<source ref="id12"/>
+			<target ref="id10"/>
+			<label kind="synchronisation" x="-620" y="-416">shipW?</label>
+		</transition>
+		<transition>
+			<source ref="id12"/>
+			<target ref="id11"/>
+			<label kind="synchronisation" x="-714" y="-417">carW?</label>
+		</transition>
+	</template>
+	<template>
+		<name>MonitorB</name>
+		<declaration>double timeCar;
+double timeShip;</declaration>
+		<location id="id13" x="-77" y="-9">
+			<name x="-51" y="-17">Ship</name>
+		</location>
+		<location id="id14" x="-162" y="-9">
+			<name x="-204" y="-17">Car</name>
+		</location>
+		<location id="id15" x="-119" y="-68">
+		</location>
+		<init ref="id15"/>
+		<transition>
+			<source ref="id15"/>
+			<target ref="id13"/>
+			<label kind="synchronisation" x="-93" y="-59">shipB?</label>
+		</transition>
+		<transition>
+			<source ref="id15"/>
+			<target ref="id14"/>
+			<label kind="synchronisation" x="-187" y="-60">carB?</label>
+		</transition>
+	</template>
+	<template>
+		<name>MonitorC</name>
+		<declaration>double timeCar;
+double timeShip;</declaration>
+		<location id="id16" x="-77" y="-9">
+			<name x="-51" y="-17">Ship</name>
+		</location>
+		<location id="id17" x="-162" y="-9">
+			<name x="-204" y="-17">Car</name>
+		</location>
+		<location id="id18" x="-119" y="-68">
+		</location>
+		<init ref="id18"/>
+		<transition>
+			<source ref="id18"/>
+			<target ref="id16"/>
+			<label kind="synchronisation" x="-85" y="-59">shipC?</label>
+		</transition>
+		<transition>
+			<source ref="id18"/>
+			<target ref="id17"/>
+			<label kind="synchronisation" x="-187" y="-59">carC?</label>
+		</transition>
+	</template>
+	<template>
+		<name>MonitorEND</name>
+		<declaration>double timeCar;
+double timeShip;</declaration>
+		<location id="id19" x="-264" y="-196">
+			<name x="-238" y="-204">Ship</name>
+		</location>
+		<location id="id20" x="-349" y="-196">
+			<name x="-391" y="-204">Car</name>
+		</location>
+		<location id="id21" x="-306" y="-255">
+		</location>
+		<init ref="id21"/>
+		<transition>
+			<source ref="id21"/>
+			<target ref="id19"/>
+			<label kind="synchronisation" x="-280" y="-246">shipEND?</label>
+		</transition>
+		<transition>
+			<source ref="id21"/>
+			<target ref="id20"/>
+			<label kind="synchronisation" x="-382" y="-246">carEND?</label>
+		</transition>
+	</template>
+	<system>system Car, Ship, MonitorW, MonitorB, MonitorC, MonitorEND;
+    </system>
+	<queries>
+	</queries>
+</nta>
